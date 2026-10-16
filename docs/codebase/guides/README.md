@@ -19,6 +19,7 @@ the code comments use. Nothing here is executed: these pages point into `src/`, 
 | [project-notes.md](project-notes.md) | What question each prose doc answers: README, UPSTREAM, DETAILS (upstream-only parts flagged), the plan and study, and the `docs/qwen36-port/` notes as a step-1-to-5 timeline |
 | [glossary.md](glossary.md) | The domain terms (MoE, GDN, QSA, PLE, MTP, verify window, pack, profile, slot, PCIe fraction, KV formats, quant formats, oracle, seam, REGINA ids, ...) defined from this repo's usage, each with a link |
 | [rtx50-flash-next.md](rtx50-flash-next.md) | Qwen3.8-Flash-Next on an RTX 50 card: the architecture part by part (hyper-connections, PLE n-gram table, Gated DeltaNet, sparse QSA attention, 512-expert MoE, MTP), the code and memory tier behind each part, the sm_90+ cluster kernels, every fork change on Flash-Next's path, and VRAM / RAM sizing per card |
+| [rtx3090-flash-next.md](rtx3090-flash-next.md) | Qwen3.8-Flash-Next on RTX 3090s. Part A, one card: the measured configuration and the fork changes it led to, each architectural part's place on 24 GB, the sm_86 paths. Part B, two cards: how the architecture divides, the helper cache, layer split and peer tier with what each card holds, host RAM, PCIe and NVLink, and the front-end change the last two need |
 
 ## Source map
 

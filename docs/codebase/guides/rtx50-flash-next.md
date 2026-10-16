@@ -117,7 +117,7 @@ disk ([README.md](../../../README.md), "Qwen3.8-Flash-Next").
 
 | Piece | Size | Default home | What decides it |
 | --- | --- | --- | --- |
-| Routed experts, 24,576 | ~40 GiB (the arena a 4090 run pinned), so ~1.7 MiB each on average | VRAM slots for the hottest, pinned RAM for the rest | `--expert-cache auto`, `expert-profile.bin`, adaptive swaps |
+| Routed experts, 24,576 | 42,912,972,800 B = 39.97 GiB (`tests/data/native_experts/iq3_xxs.txt`), 1.31 to 2.33 MB per expert depending on the layer, 1.67 MiB on average | all of them in pinned RAM; copies of the hottest in VRAM slots | `--expert-cache auto`, `expert-profile.bin`, adaptive swaps |
 | PLE n-gram table | 28.8 GB (shard 2) | RAM (the front end's `--ple-io ram`) | `--ple-io direct\|mmap\|ram` |
 | Dense weights: GDN, attention, shared experts, routers, hyper-connection weights, output head | a few GB | VRAM | always on the card |
 | Token embedding | 248,320 rows | mapped pinned host RAM, no VRAM | `NativeEmbed` (`include/strata/core/native_head.hpp:40-43`) |
@@ -338,7 +338,7 @@ The mechanisms that make a 24 GB (or smaller) card work, each from upstream:
 | Mechanism | What it does | Code / doc |
 | --- | --- | --- |
 | **Profile-filled VRAM cache** | At start, `--expert-cache auto` takes all free VRAM after a reserve and fills slots in the rank order of `expert-profile.bin` (48 x 512 ranking, [data-files.md](data-files.md)). **Sized slots** cut each slot to its expert's own blob size and fit about 30% more experts | `generate.cpp:3545-3843`, [program/expert-tiers.md](../program/expert-tiers.md#vram-cache-sizing-3545-3796), [core/experts/vram-cache.md](../core/experts/vram-cache.md) |
-| **Pinned RAM arena** | Every expert is loaded into page-locked RAM. Once the VRAM fill is done, the RAM pages of VRAM-held experts are handed back to the OS (`srcp->release`) | [core/experts/expert-sources.md](../core/experts/expert-sources.md) |
+| **Pinned RAM arena** | Every expert is loaded into page-locked RAM and stays there, VRAM-held ones included: `ArenaExpertSource::release` (`src/core/expert_source.cpp:3005`) frees pages only for the file-backed arena of `STRATA_ARENA_MMAP=1` | [core/experts/expert-sources.md](../core/experts/expert-sources.md) |
 | **CPU and GPU at the same time** | The router's ids go to the host through a mapped "doorbell". The CPU pool computes the missed experts in place in RAM while the GPU computes the cached ones and the shared expert. Neither waits for the other to fetch weights | `struct Doorbell` (`include/strata/core/layer.hpp:409`), [core/experts/dispatch.md](../core/experts/dispatch.md) |
 | **PCIe share of the misses** | Up to 55% of a layer's distinct missed experts are read by the GPU straight from pinned RAM. The share is scaled down on a link measured below 20 GB/s | `pcie_frac_for_gbps` (`generate.cpp:1275`), [dispatch.md](../core/experts/dispatch.md) |
 | **Adaptive swaps** | Every 4 verify rounds, up to 96 of the most-routed non-resident experts swap into the slots of the least-routed resident ones of the same layer, so the cache follows the conversation | [core/experts/resident-ram-and-adaptive.md](../core/experts/resident-ram-and-adaptive.md) |
@@ -525,7 +525,7 @@ On a card under 24 GB, these levers free VRAM for expert slots, in rough order o
 
 | Item | Size | When |
 | --- | ---: | --- |
-| Expert arena (pinned) | ~40 GiB at load. The VRAM-held experts' pages are given back afterwards, so 40 GiB minus the card's share | default |
+| Expert arena (pinned) | 40 GiB, the VRAM-held experts included (the 4090 note: "its 40 GiB expert arena is pinned") | default; `STRATA_ARENA_MMAP=1` maps `experts.bin` instead and hands back the pages of experts a GPU holds |
 | PLE table | 28.8 GB | `--ple-io ram` (the front end's default); ~0.1 GB with `direct`; OS cache with `mmap` |
 | KV host copy | context x 12,672 B (2.5 GB at 196,608) | with `--kv-resident` |
 | Prompt-cache checkpoints | up to 6 x ~118 MB | serve mode |
@@ -614,5 +614,6 @@ make build CUDA_ARCHS=120          # RTX 50 only; a short build
   expert tiers in full.
 - [libs/platform.md](../libs/platform.md): `robust_read.hpp` among the platform helpers.
 - [frontend/engine-process.md](../frontend/engine-process.md): the engine command line the front end builds.
+- [rtx3090-flash-next.md](rtx3090-flash-next.md): the same model on one and on two RTX 3090s.
 - [UPSTREAM.md](../../../UPSTREAM.md): the fork's change list and how the pack and draft head were made.
 - [docs/upstream/DETAILS.md](../../upstream/DETAILS.md): upstream's RTX 5070 measurements and its "How it works".
