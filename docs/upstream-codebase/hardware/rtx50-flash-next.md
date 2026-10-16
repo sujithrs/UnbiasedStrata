@@ -160,13 +160,13 @@ nothing by itself (`draft_vocab_note`, `setup.py:3245`).
   and computes a per-stream injection;
 - `gr_write` adds the sub-block's output back into every stream, weighted per stream.
 
-`include/strata/kernels/gr.hpp:5-7`: "The residual is a STACK of `hc` streams, each `n_embd` wide - not one vector
+`include/strata/kernels/gr.hpp:6-8`: "The residual is a STACK of `hc` streams, each `n_embd` wide - not one vector
 with a gate."
 
 **Code.** `gr_read` / `gr_write` (`src/kernels/cuda/gr.cu:344`, `:413`); a fused form that folds the previous write
 into the next read (`--no-fused-gr` is the A/B arm, `generate.cpp:642`).
 
-**Memory.** The stack is tiny; its weights are not. `gr.hpp:9-13`: the `hc_*` tensors are 288 of the shard's 483 BF16
+**Memory.** The stack is tiny; its weights are not. `gr.hpp:10-14`: the `hc_*` tensors are 288 of the shard's 483 BF16
 tensors and 1.374 GiB of the 5.305 GiB dense file. Keeping them in BF16 "is the difference between the dense
 weights fitting in VRAM beside the expert cache and not fitting at all".
 

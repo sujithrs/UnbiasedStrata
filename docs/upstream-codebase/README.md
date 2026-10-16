@@ -33,7 +33,7 @@ The writers for this tree were stopped part-way to save budget.
 | [sycl/](sycl/README.md) | The Intel GPU port: how it was migrated from CUDA, its layout, build and server wrapper | 7 written, 0 placeholder | draft: unchecked |
 | [tools/](tools/README.md) | Python tools: pack builders, GGUF I/O, tokenizer, draft head, profile and draft vocabulary, test scripts | 11 written, 1 placeholder | draft: unchecked |
 | [guides/](guides/README.md) | Testing index, benchmarks, models, prose-doc guide, glossary | 3 written, 3 placeholder | draft: unchecked |
-| [hardware/](hardware/README.md) | Qwen3.8-Flash-Next on RTX 50 and on one or two RTX 3090s | 3 written, 0 placeholder | RTX 3090 page rechecked against source; RTX 50 page and overview unchecked |
+| [hardware/](hardware/README.md) | Qwen3.8-Flash-Next on RTX 50 and on one or two RTX 3090s | 3 written, 0 placeholder | RTX 50 and RTX 3090 pages rechecked against source; overview unchecked |
 
 ## How upstream fits together
 
