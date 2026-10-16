@@ -11,7 +11,7 @@ any card. This page is written from upstream's own guides, mainly
 [docs/MULTI_GPU.md](https://github.com/Niko1221/Strata/blob/6f32ec070f23ced9f50e704d854d775da52591ab/docs/MULTI_GPU.md)
 and
 [docs/SECOND_GPU.md](https://github.com/Niko1221/Strata/blob/6f32ec070f23ced9f50e704d854d775da52591ab/docs/SECOND_GPU.md).
-It cites them rather than re-verifying every source line. Every number is upstream's, and each says what it was
+Key claims were re-checked against the source at this commit; where the guide and the code differ, the code is quoted. Every number is upstream's, and each says what it was
 measured on.
 
 ---
@@ -84,15 +84,16 @@ You can also edit the config and restart: `"gpu": [0, 1], "layer_split": "auto"`
 **first layer of the later card** (for example `24`), not a count of layers per card.
 
 The engine flags behind it are `--layer-split K|auto` and `--split-device D` (MULTI_GPU.md). `auto` tries every
-placement for two cards and keeps the one whose caches hold the most of the expert profile, with the hottest pairs
-weighted most. The start-up log prints the result, for example:
+placement for two cards. MULTI_GPU.md says it keeps the placement whose caches hold the most of the profile; the code
+at this commit ranks placements by a **predicted decode-window time**, and logs that time together with the caches'
+share (`src/program/generate.cpp:2837-2839`):
 
 ```
-strata generate: layer split auto: K=19 - the caches hold 11767 of 12288 profiled pairs (fullest device 100%)
-strata serve: layer split: layers 0-18 (CUDA0), 19-47 (CUDA1), one hand-off per window
+strata generate: layer split auto: K=<k> - predicted <t> ms per decode window; the caches hold <n> of <m> profiled pairs (~<p>% of the routed mass)
+strata serve: layer split: layers <ranges>, one hand-off per window
 ```
 
-(That example is upstream's, from the Coder model.)
+The second line comes from `generate.cpp:5131`.
 
 ### What each card holds
 
@@ -100,7 +101,7 @@ From MULTI_GPU.md, "What each card holds":
 
 | | Card 0 | Card 1 |
 | --- | --- | --- |
-| Dense weights | a full copy by default; only its own layers' with `STRATA_STAGE_TRIM=1` and an explicit K (0.1.39, PR #639) | the same |
+| Dense weights | a full copy by default; only its own layers' with `STRATA_STAGE_TRIM=1` or `--trim-stage-weights` and an explicit K. With `auto` the trim is ignored, with a message (`generate.cpp:2202-2213`) | the same |
 | Session | its own state: the KV of the full context for its attention layers, its GDN state | the same, for its layers |
 | Verify window and prompt buffers | its own (1.5 GB at the default 2,048-token chunk; `--prefill 1024` halves it) | its own |
 | Expert cache | its layers' experts, from the profile | its layers' experts |
