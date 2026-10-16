@@ -76,7 +76,7 @@ The form each tensor must have is the `FORM` table (`iq_pack.py:73-86`, keyed by
 routers, hyper-connection projections, indexer projections, `ssm_alpha`/`ssm_beta` and the PLE key/value are BF16;
 the q/k norms, hyper-connection norms, indexer norms, PLE norms, `ssm_a`, `ssm_conv1d`, `ssm_dt.bias` and
 `ssm_norm` are F32; `ple_conv1d` is F16. A float tensor not in `FORM` is written as stored. The conversion rules
-are in [pack-builders.md](pack-builders.md#conversions).
+are in [pack-builders.md](pack-builders.md).
 
 ### 1.3 `native_experts.txt`
 

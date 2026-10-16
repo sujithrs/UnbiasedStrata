@@ -95,7 +95,7 @@ What step 1 does with these (`setup.py:3822-3837`): it prints `CPU: <name> (AVX-
 sets `a.build = True`, so the engine is compiled with `STRATA_ISA_FLOOR`. A Windows AMD install stops instead, since
 setup compiles the AMD engine only on Linux. AVX-512 also selects the Q2_0 AVX-512 pack
 ([downloads-and-packs.md](downloads-and-packs.md#the-pack)). The hybrid cores feed `--pool-workers`
-([calibration.md](calibration.md#the-hybrid-cpu-rule)).
+([calibration.md](calibration.md)).
 
 ## Disk and environment
 

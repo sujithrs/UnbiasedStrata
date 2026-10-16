@@ -21,7 +21,7 @@ it runs are covered in [tools](../tools/README.md).
 | A pinned revision that is gone | A 404 on the HEAD request retries `.../resolve/main/` with a warning (`hf_unpinned()`, `setup.py:87-89`; `setup.py:1049-1053`) |
 | llama.cpp | `https://github.com/ggml-org/llama.cpp/archive/3cf03257....zip` (`setup.py:93-94`). Where GitHub cannot be reached, a tree placed in `third_party/llama.cpp` by hand is used (#585, INSTALL.md) |
 | Engine zips | GitHub releases, see [engine.md](engine.md#the-ready-made-engine-nvidia) |
-| Python packages | `requirements.txt` pins ([launchers-and-chat.md](launchers-and-chat.md#requirementstxt)) |
+| Python packages | `requirements.txt` pins ([launchers-and-chat.md](launchers-and-chat.md)) |
 | MTP tensors | Fetched by `tools/mtp_fetch.py` from the original Qwen checkpoint (only ~5 GB). It is pinned too and follows `HF_ENDPOINT` (tested in `test_setup_pins.py`) |
 
 ## download() (`setup.py:1026-1098`)

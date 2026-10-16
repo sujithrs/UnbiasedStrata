@@ -89,13 +89,13 @@ In order:
 8. **Low-RAM variant**: resident or mapped, and the GPU's share of the experts.
 9. **Experimental speed projection** (qwen and coder only; "Turn on ...?", default n).
 10. **Model files location** (`--gguf-dir`, the data folder, or another drive's Strata folder), whole-file marks, and
-    the **free disk** check ([downloads-and-packs.md](downloads-and-packs.md#disk-space)).
+    the **free disk** check ([downloads-and-packs.md](downloads-and-packs.md)).
 
 ## Step 3: Python packages (`setup.py:4091-4093`)
 
 `pip_install(requirement_lines())` installs `requirements.txt` into `.venv` (falling back to the bare `PY_PACKAGES`
 list when the file is missing). The step is skipped when `.venv/.strata-pip.json` already lists the same pins
-([launchers-and-chat.md](launchers-and-chat.md#requirementstxt)).
+([launchers-and-chat.md](launchers-and-chat.md)).
 
 ## Step 4: the engine (`setup.py:4096-4129`)
 

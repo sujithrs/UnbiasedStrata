@@ -67,7 +67,7 @@ All paths are relative to the upstream root at commit `6f32ec0`.
 | [tools/test_setup_update.py](https://github.com/Niko1221/Strata/blob/6f32ec070f23ced9f50e704d854d775da52591ab/tools/test_setup_update.py) | 145 | Tests: `--update` (#475) and the settings line (#564) |
 
 Related files that call `setup.py` and belong to other areas: `Dockerfile` (115 lines) and `docker-entrypoint.sh`
-(65 lines) build and run it in a container ([launchers-and-chat.md](launchers-and-chat.md#docker)).
+(65 lines) build and run it in a container ([launchers-and-chat.md](launchers-and-chat.md)).
 `sycl/setup_intel.py` imports it for Intel Arc. `tools/strata_mcp.py` imports its tables and runs it for AI
 assistants. `tools/calibrate.py` is the tuning that `--calibrate` runs ([tools](../tools/README.md)).
 

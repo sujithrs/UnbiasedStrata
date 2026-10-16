@@ -281,7 +281,7 @@ The mechanisms that make a 12-32 GB card work:
 | Low-RAM modes (chosen by setup) | `--mmap-experts` maps the pack's `experts.bin`; `--resident-experts` copies only what the GPU lacks into RAM; `--resident-budget-gib N` keeps the hottest N GiB in RAM and reads the rest from the files (the Unsloth variants) | DETAILS.md, "Low-RAM mode" |
 
 Upstream reports the effect as the decode hit rate: on one RTX 3090 with IQ3_XXS, 10,584 of 24,576 experts in
-VRAM gave 94-97% hits (see [rtx3090-flash-next.md](rtx3090-flash-next.md#a2-what-upstream-measured-on-one-rtx-3090)).
+VRAM gave 94-97% hits (see [rtx3090-flash-next.md](rtx3090-flash-next.md)).
 The ranking puts the experts routed most first, so the hit rate is far above the share of experts held.
 
 ### 3.7 The MTP draft layer and the verify window

@@ -46,7 +46,7 @@ variants (GSQ-RCO Coder) legitimately ship fewer experts than the canonical 512"
 ## 2. Canonical and native packs
 
 Every model needs a **pack**, a directory beside the GGUF that the engine loads with `--pack` (see
-[glossary.md](glossary.md#models-files-and-packs)). Upstream has two kinds:
+[glossary.md](glossary.md)). Upstream has two kinds:
 
 | | Canonical pack | Native pack |
 | --- | --- | --- |
