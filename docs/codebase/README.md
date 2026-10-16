@@ -118,7 +118,7 @@ The engine reads the geometry from GGUF metadata. Its `general.architecture` key
 | [Prefill](prefill/README.md) | Batched prompt processing: GEMMs, fused and MMQ MoE, GDN chunks, prompt attention, expert streaming, the ggml bridge | `src/prefill/`, `include/strata/prefill/` |
 | [Libraries](libs/README.md) | Speculation policy and suffix drafter, direct and robust file I/O, the older planner, the GGUF reader and dequantizers, the PLE reader | `src/spec/`, `src/platform/`, `src/plan/`, `src/artifact/`, `src/ngram/` |
 | [Tools](tools/README.md) | Building packs, profiles, draft vocabularies and draft heads, the on-disk pack format, Qwen3.6 verification tooling, the numpy reference model | `tools/`, `ref/`, `tests/python/` |
-| [Guides](guides/README.md) | Shipped data files and their byte formats, an index of every test, a reading guide to the prose notes, a glossary | `data/`, `tests/`, `docs/` |
+| [Guides](guides/README.md) | Shipped data files and their byte formats, an index of every test, a reading guide to the prose notes, a glossary, and Qwen3.8-Flash-Next on an RTX 50 card (the architecture against the code and its memory) | `data/`, `tests/`, `docs/` |
 
 ### Where each directory of the repository is documented
 
@@ -145,6 +145,9 @@ The engine reads the geometry from GGUF metadata. Its `general.architecture` key
 
 - **New to the project:** [guides/glossary.md](guides/glossary.md), then this page's diagram, then
   [core/README.md](core/README.md) and [program/README.md](program/README.md).
+- **Understanding Qwen3.8-Flash-Next, or running it on an RTX 50 card:**
+  [guides/rtx50-flash-next.md](guides/rtx50-flash-next.md): the model part by part, the code and memory tier
+  behind each part, the RTX 50 (sm_90+) code paths, and every change this fork made on that model's path.
 - **Running or operating the server:** [frontend/http-api.md](frontend/http-api.md),
   [frontend/engine-process.md](frontend/engine-process.md), [program/cli-flags.md](program/cli-flags.md),
   [program/env-vars.md](program/env-vars.md), [core/vram-plan.md](core/vram-plan.md).

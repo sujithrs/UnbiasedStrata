@@ -18,6 +18,7 @@ the code comments use. Nothing here is executed: these pages point into `src/`, 
 | [testing.md](testing.md) | Every test: front-end Make targets, unit tests in `src/` and `tests/`, kernel parity counts, Python unit tests, CTest fixtures and oracle tools; `STRATA_BUILD_TESTS`, `ctest`, skip codes, known host failures |
 | [project-notes.md](project-notes.md) | What question each prose doc answers: README, UPSTREAM, DETAILS (upstream-only parts flagged), the plan and study, and the `docs/qwen36-port/` notes as a step-1-to-5 timeline |
 | [glossary.md](glossary.md) | The domain terms (MoE, GDN, QSA, PLE, MTP, verify window, pack, profile, slot, PCIe fraction, KV formats, quant formats, oracle, seam, REGINA ids, ...) defined from this repo's usage, each with a link |
+| [rtx50-flash-next.md](rtx50-flash-next.md) | Qwen3.8-Flash-Next on an RTX 50 card: the architecture part by part (hyper-connections, PLE n-gram table, Gated DeltaNet, sparse QSA attention, 512-expert MoE, MTP), the code and memory tier behind each part, the sm_90+ cluster kernels, every fork change on Flash-Next's path, and VRAM / RAM sizing per card |
 
 ## Source map
 
